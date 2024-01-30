@@ -19,7 +19,7 @@ function Card() {
                 <select
                     value={filteredTitle}
                     onChange={handleTitleFilterChange}
-                    className="cursor-pointer outline-none border-none text-xl appearance-none "
+                    className="bg-transparent cursor-pointer outline-none border-none text-xl appearance-none "
                 >
                     <option value="">Фильтр по секциям</option>
                     {titles.map((title) => (
