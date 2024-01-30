@@ -3,7 +3,7 @@ import { data } from "../Data";
 import { Link } from "react-router-dom";
 
 function call() {
-    window.open("tel:89990004300");
+    window.open("tel:89252402661", "_self");
 }
 
 function Card() {
