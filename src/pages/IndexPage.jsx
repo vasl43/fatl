@@ -50,7 +50,7 @@ function Card() {
 }
 
 function call() {
-    window.open("tel:89990004300");
+    window.open("tel:89252402661", "_self");
 }
 
 export default function IndexPage() {
