@@ -14,7 +14,7 @@ export default function RegisterPage() {
         return (
             <div className="bg-white w-full fixed top-0 left-0 h-full m-auto p-4">
                 <div className="w-full flex flex-col justify-center items-center mt-32">
-                    <video src="/suc.mp4" autoPlay></video>
+                    <video src="/suc.mp4" autoplay loop muted controls webkit-playsinline playsinline></video>
                     <h2 className="text-xl">Регистрация прошла успешно!</h2>
                 </div>
             </div>
