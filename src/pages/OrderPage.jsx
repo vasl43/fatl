@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 export default function OrderPage() {
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [animate, setAnimate] = useState(false);
 
     const phoneMask = (e) => {
         const input = e.target.value.replace(/\D/g, "");
@@ -17,6 +19,39 @@ export default function OrderPage() {
             formattedNumber = input;
         }
         setPhone(formattedNumber);
+    };
+
+    const SuccesAnimation = () => {
+        return (
+            <div className="bg-white w-full fixed top-0 left-0 h-full m-auto p-4">
+                <div className="w-full flex flex-col justify-center items-center mt-32">
+                    <h2 className="text-xl">Вы успешно записались</h2>
+                </div>
+            </div>
+        );
+    };
+
+    const handleSubmit = async (ev) => {
+        ev.preventDefault();
+        setLoading(true);
+        try {
+            const response = await fetch("/sendToTelegram", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ name, phone }),
+            });
+            const data = await response.json();
+            console.log(data);
+            setAnimate(true);
+            setTimeout(function () {
+                window.open("/", "_self");
+            }, 3000);
+        } catch (error) {
+            console.error(error);
+        }
+        setLoading(false);
     };
 
     return (
@@ -41,9 +76,14 @@ export default function OrderPage() {
                     onChange={phoneMask}
                     maxLength={11}
                 />
-                <button className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl mt-5 w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold">
-                    Записаться
+                <button
+                    onClick={handleSubmit}
+                    disabled={loading}
+                    className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl mt-5 w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold"
+                >
+                    {loading ? "Загрузка..." : "Записаться"}
                 </button>
+                {animate && <SuccesAnimation />}
                 <Link
                     to={"/privacy"}
                     className="mt-4 cursor-pointer font-regular text-center text-xs"
