@@ -35,7 +35,7 @@ function Card() {
                         className="cursor-pointer hover:scale-105 transition-transform duration-100"
                         key={item.id}
                     >
-                        <Link to={`/card/${item.id}`}>
+                        <Link to={`/card/${item.id}`} onClick={window.scrollTo(0, 0)}>
                             <img src={item.image} className="rounded-xl" />
                             <h2 className="mt-2 text-l font-bold">
                                 {item.title}
