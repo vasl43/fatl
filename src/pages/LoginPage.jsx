@@ -8,12 +8,12 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const { setUser } = useContext(UserContext);
     const [animate, setAnimate] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const SuccesAnimation = () => {
         return (
             <div className="bg-white w-full fixed top-0 left-0 h-full m-auto p-4">
                 <div className="w-full flex flex-col justify-center items-center mt-32">
-                    <video src="/suc.mp4" autoplay loop muted controls webkit-playsinline playsinline></video>
                     <h2 className="text-xl">Успешный вход!</h2>
                 </div>
             </div>
@@ -36,6 +36,7 @@ export default function LoginPage() {
 
     async function handleLoginSubmit(ev) {
         ev.preventDefault();
+        setLoading(true);
         try {
             const { data } = await axios.post("/login", { phone, password });
             setUser(data);
@@ -46,6 +47,7 @@ export default function LoginPage() {
         } catch (e) {
             alert("Ошибка");
         }
+        setLoading(false);
     }
 
     return (
@@ -71,8 +73,11 @@ export default function LoginPage() {
                     className="p-3 border-2 border-black rounded-xl outline-none w-full lg:max-w-xs md:max-w-xs sm:max-w-xs mt-2 font-bold"
                     onChange={(ev) => setPassword(ev.target.value)}
                 />
-                <button className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl mt-5 w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold">
-                    Войти
+                <button
+                    disabled={loading}
+                    className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl mt-5 w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold"
+                >
+                    {loading ? "Загрузка..." : "Войти"}
                 </button>
                 {animate && <SuccesAnimation />}
                 <Link
