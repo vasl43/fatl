@@ -9,12 +9,12 @@ export default function RegisterPage() {
     const [birthday, setBirthday] = useState("");
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const SuccesAnimation = () => {
         return (
             <div className="bg-white w-full fixed top-0 left-0 h-full m-auto p-4">
                 <div className="w-full flex flex-col justify-center items-center mt-32">
-                    <video src="/suc.mp4" autoplay loop muted controls webkit-playsinline playsinline></video>
                     <h2 className="text-xl">Регистрация прошла успешно!</h2>
                 </div>
             </div>
@@ -47,6 +47,7 @@ export default function RegisterPage() {
 
     async function registerUser(ev) {
         ev.preventDefault();
+        setLoading(true);
         try {
             await axios.post("/register", {
                 name,
@@ -61,6 +62,7 @@ export default function RegisterPage() {
         } catch (e) {
             setError(true);
         }
+        setLoading(false);
     }
 
     return (
@@ -102,8 +104,11 @@ export default function RegisterPage() {
                     className="p-3 border-2 border-black rounded-xl outline-none w-full lg:max-w-xs md:max-w-xs sm:max-w-xs font-bold mt-2"
                     onChange={(ev) => setPassword(ev.target.value)}
                 />
-                <button className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl mt-5 w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold">
-                    Зарегистрироваться
+                <button
+                    disabled={loading}
+                    className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl mt-5 w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold"
+                >
+                    {loading ? "Загрузка..." : "Зарегистрироваться"}
                 </button>
                 {animate && <SuccesAnimation />}
                 {error && <p>Произошла ошибка</p>}
