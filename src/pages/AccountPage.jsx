@@ -28,7 +28,7 @@ export default function AccountPage() {
                         </div>
                     </div>
                     <div className="m-auto text-center">
-                        {user.left !== 0 && (
+                        {user.price !== 0 && (
                             <button className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold my-5">
                                 Продлить
                             </button>
