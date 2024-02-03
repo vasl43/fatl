@@ -22,7 +22,13 @@ function Card() {
                             <h2 className="text-4xl font-semibold mb-1">
                                 {product.title}
                             </h2>
-                            <p className="cursor-pointer">{product.location}</p>
+                            <a
+                                href={product.link}
+                                target="_blank"
+                                className="cursor-pointer"
+                            >
+                                {product.location}
+                            </a>
                         </div>
                         <img
                             src={product.image}
