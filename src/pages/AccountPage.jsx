@@ -4,23 +4,11 @@ import axios from "axios";
 export default function AccountPage() {
     async function payment(ev) {
         ev.preventDefault();
-        let config = {
-            method: "post",
-            url: "https://test.isroil-holding.uz/api/payment",
-            headers: {
-                Authorization:
-                    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5MmMyNyIsImZ1bGxuYW1lIjoiT3liZWsgQWJkdWphYmJvcm92IiwiYnJpdGhkYXkiOiIxOTk2LTAzLTAzVDE5OjAwOjAwLjAwMFoiLCJwaG9uZSI6Iis5OTg5NTAyNzA0OTYiLCJwYXltZW50X2Ftb3VudCI6Mi4xNSwicm9sZSI6ImFkbWluIiwicGFzc3dvcmQiOiI4YzY5NzZlNWI1NDEwNDE1YmRlOTA4YmQ0ZGVlMTVkZmIxNjdhOWM4NzNmYzRiYjhhODFmNmYyYWI0NDhhOTE4IiwiZXhwaXJhdGlvbiI6IjIwMjQtMDMtMDhUMTk6MDA6MDAuMDAwWiIsImRlbGV0ZWRfYXQiOm51bGwsImpvaW5lZF9hdCI6IjIwMjQtMDItMDZUMTU6MDA6MTAuMDAwWiIsInVwZGF0ZWRfYXQiOm51bGwsImlhdCI6MTcwNzQ2Nzk5NCwiZXhwIjoxNzA3NTExMTk0fQ.BKI0r3dOUAu0C8Wt9V657TtixVxas0aqHkA5fbvj0c0",
-            },
-        };
-
-        axios
-            .request(config)
-            .then((response) => {
-                console.log(JSON.stringify(response.data));
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    }
+    function logout(ev) {
+        ev.preventDefault();
+        localStorage.clear();
+        window.open("https://atletikum.ru/", "_self");
     }
     return (
         <div className="p-4 max-w-screen-lg m-auto mt-2 lg:mt-10 md:mt-10 sm:mt-10 pt-20">
@@ -50,6 +38,9 @@ export default function AccountPage() {
                             {user.payment_amount + " ₽"}
                         </label>
                     </p>
+                    <div className="flex justify-center items-center text-center m-auto py-10">
+                        <button onClick={logout}>Выйти</button>
+                    </div>
                 </div>
             )}
             {!user && window.open("https://atletikum.ru/login", "_self")}
