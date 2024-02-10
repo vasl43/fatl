@@ -52,11 +52,12 @@ function Card() {
     );
 }
 
-function call() {
-    window.open("tel:89252402661", "_self");
-}
-
 export default function IndexPage() {
+    const [buttonText, setButtonText] = useState("Позвонить");
+    function call() {
+        setButtonText("+7 (925) 240-26-61");
+        window.open("tel:89252402661", "_self");
+    }
     return (
         <div>
             <Card />
@@ -79,7 +80,7 @@ export default function IndexPage() {
                     className="bg-black text-white rounded-xl fixed p-4 bottom-3 lg:w-[360px] md:w-[360px] sm:w-[360px] w-11/12 max-w-[400px] hover:bg-zinc-800"
                     onClick={call}
                 >
-                    Позвонить
+                    {buttonText}
                 </button>
             </div>
         </div>
