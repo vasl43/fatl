@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import { data } from "../Data";
-import { Link } from "react-router-dom";
 
 function call() {
     window.open("tel:89252402661", "_self");
@@ -9,10 +8,7 @@ function call() {
 function Card() {
     const { id } = useParams();
     const product = data.find((product) => product.id === id);
-
-    if (!product) {
-        return <h3>Товар не найден!</h3>;
-    }
+    window.scrollTo(0, 0);
     return (
         <div>
             <section className="p-4 max-w-screen-lg m-auto mt-2 lg:mt-10 md:mt-10 sm:mt-10">
@@ -73,21 +69,14 @@ function Card() {
                                 семьи
                             </p>
                         </div>
-                        <div className="w-[92%] fixed bottom-0 bg-white lg:static md:static lg:w-full md:w-full z-30 pb-5 pt-0">
+                        <div className="p-2 max-w-screen-lg flex justify-center items-center m-auto">
                             <button
+                                data-te-ripple-init
+                                className="bg-black text-white rounded-xl fixed p-4 bottom-3 lg:w-[360px] md:w-[360px] sm:w-[360px] w-11/12 max-w-[400px] hover:bg-zinc-800 lg:bottom-96 md:bottom-96"
                                 onClick={call}
-                                className="border-solid border-2 border-black outline-none shadow-none text-black bg-transparent p-3 rounded-xl w-full my-5 mt-8"
                             >
                                 Позвонить
                             </button>
-                            <div className="w-full m-auto flex justify-center items-center">
-                                <Link
-                                    to="/order"
-                                    className="hover:bg-zinc-800 bg-black shadow-none text-white p-4 rounded-xl border-none outline-none w-full text-center"
-                                >
-                                    Записаться на пробное занятие
-                                </Link>
-                            </div>
                         </div>
                     </div>
                 </div>
