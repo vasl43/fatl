@@ -1,53 +1,40 @@
 import axios from "axios";
-import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { UserContext } from "../userContext";
+import { useState } from "react";
+const user = JSON.parse(localStorage.getItem("user")) || null;
 
 export default function LoginPage() {
-    const [phone, setPhone] = useState("");
-    const [password, setPassword] = useState("");
-    const { setUser } = useContext(UserContext);
-    const [animate, setAnimate] = useState(false);
-    const [loading, setLoading] = useState(false);
-
-    const SuccesAnimation = () => {
-        return (
-            <div className="bg-white w-full fixed top-0 left-0 h-full m-auto p-4">
-                <div className="w-full flex flex-col justify-center items-center mt-32">
-                    <h2 className="text-xl">Успешный вход!</h2>
-                </div>
-            </div>
-        );
-    };
-
-    const phoneMask = (e) => {
-        const input = e.target.value.replace(/\D/g, "");
-        let formattedNumber;
-
-        if (input.charAt(0) !== "8" && input.charAt(0) !== "7") {
-            formattedNumber = `8${input}`;
-        } else if (input.charAt(0) === "7") {
-            formattedNumber = `8${input.slice(1)}`;
-        } else {
-            formattedNumber = input;
-        }
-        setPhone(formattedNumber);
-    };
+    const [buttonText, setButtonText] = useState("Войти");
 
     async function handleLoginSubmit(ev) {
         ev.preventDefault();
-        setLoading(true);
-        try {
-            const { data } = await axios.post("/login", { phone, password });
-            setUser(data);
-            setAnimate(true);
-            setTimeout(function () {
-                window.open("/account", "_self");
-            }, 3000);
-        } catch (e) {
-            alert("Ошибка");
-        }
-        setLoading(false);
+        let config = {
+            method: "post",
+            url: "https://test.isroil-holding.uz/api/user/signin",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            data: Object.fromEntries(new FormData(ev.target)),
+        };
+
+        axios(config)
+            .then((response) => {
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify(response.data.innerData)
+                );
+                console.log(response);
+                setButtonText("Войти");
+                setTimeout(() => {
+                    setButtonText("Успешно");
+                }, 300);
+                setTimeout(() => {
+                    window.location.href = "https://atletikum.ru/account";
+                }, 1000);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     return (
@@ -62,8 +49,7 @@ export default function LoginPage() {
                     required
                     placeholder="Номер телефона"
                     className="p-3 border-2 border-black rounded-xl outline-none w-full lg:max-w-xs md:max-w-xs sm:max-w-xs font-bold"
-                    value={phone}
-                    onChange={phoneMask}
+                    name="phone"
                     maxLength={11}
                 />
                 <input
@@ -71,15 +57,11 @@ export default function LoginPage() {
                     required
                     placeholder="Пароль"
                     className="p-3 border-2 border-black rounded-xl outline-none w-full lg:max-w-xs md:max-w-xs sm:max-w-xs mt-2 font-bold"
-                    onChange={(ev) => setPassword(ev.target.value)}
+                    name="password"
                 />
-                <button
-                    disabled={loading}
-                    className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl mt-5 w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold"
-                >
-                    {loading ? "Загрузка..." : "Войти"}
+                <button className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl mt-5 w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold">
+                    {buttonText}
                 </button>
-                {animate && <SuccesAnimation />}
                 <Link
                     to={"/register"}
                     className="text-black mt-4 cursor-pointer font-bold"
