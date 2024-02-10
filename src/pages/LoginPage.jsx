@@ -24,10 +24,10 @@ export default function LoginPage() {
                     JSON.stringify(response.data.innerData)
                 );
                 console.log(response);
-                setButtonText("Войти");
+                setButtonText("Заргузка...");
                 setTimeout(() => {
                     setButtonText("Успешно");
-                }, 300);
+                }, 100);
                 setTimeout(() => {
                     window.location.href = "https://atletikum.ru/account";
                 }, 1000);
