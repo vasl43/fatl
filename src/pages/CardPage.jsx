@@ -1,11 +1,17 @@
 import { useParams } from "react-router-dom";
 import { data } from "../Data";
+import { useState } from "react";
 
 function call() {
     window.open("tel:89252402661", "_self");
 }
 
 function Card() {
+    const [buttonText, setButtonText] = useState("Позвонить");
+    function call() {
+        setButtonText("+7 (925) 240-26-61");
+        window.open("tel:89252402661", "_self");
+    }
     const { id } = useParams();
     const product = data.find((product) => product.id === id);
     window.scrollTo(0, 0);
@@ -54,7 +60,7 @@ function Card() {
                                 </div>
                             )}
                         </div>
-                        <p className="text-4xl font-bold">*</p>
+                        <p className="text-4xl font-bold py-5">*</p>
                         <div className="text-zinc-500 pb-48 lg:pb-0 md:pb-0">
                             <p>
                                 Возрастное ограничение:{" "}
@@ -69,18 +75,18 @@ function Card() {
                                 семьи
                             </p>
                         </div>
-                        <div className="p-2 max-w-screen-lg flex justify-center items-center m-auto">
-                            <button
-                                data-te-ripple-init
-                                className="bg-black text-white rounded-xl fixed p-4 bottom-3 lg:w-[360px] md:w-[360px] sm:w-[360px] w-11/12 max-w-[400px] hover:bg-zinc-800 lg:bottom-96 md:bottom-96"
-                                onClick={call}
-                            >
-                                Позвонить
-                            </button>
-                        </div>
                     </div>
                 </div>
             </section>
+            <div className="p-2 max-w-screen-lg flex justify-center items-center m-auto">
+                <button
+                    data-te-ripple-init
+                    className="bg-black text-white rounded-xl fixed p-4 bottom-3 lg:w-[360px] md:w-[360px] sm:w-[360px] w-11/12 max-w-[400px] hover:bg-zinc-800"
+                    onClick={call}
+                >
+                    {buttonText}
+                </button>
+            </div>
         </div>
     );
 }
