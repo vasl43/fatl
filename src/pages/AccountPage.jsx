@@ -32,7 +32,7 @@ export default function AccountPage() {
                             Продлить
                         </button>
                     </div>
-                    <p className="text-center text-xl flex justify-center items-center mt-5">
+                    <p className="text-center text-xl flex justify-center items-center mt-5 mb-5">
                         Стоимость продления:
                         <label className="font-bold text-3xl ml-2">
                             {user.payment_amount + " ₽"}
