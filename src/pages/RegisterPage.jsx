@@ -20,10 +20,10 @@ export default function RegisterPage() {
 
         axios(config)
             .then((response) => {
-                setButtonText("Зарегистрироваться");
+                setButtonText("Загрузка...");
                 setTimeout(() => {
                     setButtonText("Успешно");
-                }, 300);
+                }, 100);
                 setTimeout(() => {
                     window.location.href = "https://atletikum.ru/login";
                 }, 1000);
