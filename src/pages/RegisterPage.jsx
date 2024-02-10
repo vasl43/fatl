@@ -1,68 +1,36 @@
 import axios from "axios";
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+const user = JSON.parse(localStorage.getItem("user")) || null;
 
 export default function RegisterPage() {
-    const [animate, setAnimate] = useState(false);
-    const [error, setError] = useState(false);
-    const [name, setName] = useState("");
-    const [birthday, setBirthday] = useState("");
-    const [phone, setPhone] = useState("");
-    const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
-
-    const SuccesAnimation = () => {
-        return (
-            <div className="bg-white w-full fixed top-0 left-0 h-full m-auto p-4">
-                <div className="w-full flex flex-col justify-center items-center mt-32">
-                    <h2 className="text-xl">Регистрация прошла успешно!</h2>
-                </div>
-            </div>
-        );
-    };
-
-    const phoneMask = (e) => {
-        const input = e.target.value.replace(/\D/g, "");
-        let formattedNumber;
-
-        if (input.charAt(0) !== "8" && input.charAt(0) !== "7") {
-            formattedNumber = `8${input}`;
-        } else if (input.charAt(0) === "7") {
-            formattedNumber = `8${input.slice(1)}`;
-        } else {
-            formattedNumber = input;
-        }
-        setPhone(formattedNumber);
-    };
-
-    const dateMask = (e) => {
-        const input = e.target.value;
-        if (/^\d{0,2}[./]?\d{0,2}[./]?\d{0,4}$/i.test(input)) {
-            const formattedInput = input
-                .replace(/[^\d]/g, "")
-                .replace(/(\d{2})(\d{2})(\d{0,4})/, "$1.$2.$3");
-            setBirthday(formattedInput);
-        }
-    };
+    const [buttonText, setButtonText] = useState("Зарегистрироваться");
 
     async function registerUser(ev) {
         ev.preventDefault();
-        setLoading(true);
-        try {
-            await axios.post("/register", {
-                name,
-                birthday,
-                phone,
-                password,
+
+        let config = {
+            method: "post",
+            url: "https://test.isroil-holding.uz/api/user/signup",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            data: Object.fromEntries(new FormData(ev.target)),
+        };
+
+        axios(config)
+            .then((response) => {
+                setButtonText("Зарегистрироваться");
+                setTimeout(() => {
+                    setButtonText("Успешно");
+                }, 300);
+                setTimeout(() => {
+                    window.location.href = "https://atletikum.ru/login";
+                }, 1000);
+            })
+            .catch((error) => {
+                console.log(error);
             });
-            setAnimate(true);
-            setTimeout(function () {
-                window.open("/login", "_self");
-            }, 3000);
-        } catch (e) {
-            setError(true);
-        }
-        setLoading(false);
     }
 
     return (
@@ -74,44 +42,36 @@ export default function RegisterPage() {
             >
                 <input
                     type="text"
+                    name="fullname"
                     required
                     placeholder="Ф.И.О ребенка"
                     className="p-3 border-2 border-black rounded-xl outline-none w-full lg:max-w-xs md:max-w-xs sm:max-w-xs font-bold"
-                    onChange={(ev) => setName(ev.target.value)}
                 />
                 <input
                     type="text"
+                    name="brithday"
                     required
                     placeholder="Дата рождения ребенка"
                     className="p-3 border-2 border-black rounded-xl outline-none w-full lg:max-w-xs md:max-w-xs sm:max-w-xs font-bold mt-2"
-                    onChange={dateMask}
-                    onFocus={(ev) => (ev.target.placeholder = "дд.мм.гггг")}
-                    value={birthday}
                 />
                 <input
                     type="text"
+                    name="phone"
                     required
                     placeholder="Номер телефона"
                     className="p-3 border-2 border-black rounded-xl outline-none w-full lg:max-w-xs md:max-w-xs sm:max-w-xs font-bold mt-2"
-                    value={phone}
-                    onChange={phoneMask}
                     maxLength={11}
                 />
                 <input
                     type="password"
+                    name="password"
                     required
                     placeholder="Пароль"
                     className="p-3 border-2 border-black rounded-xl outline-none w-full lg:max-w-xs md:max-w-xs sm:max-w-xs font-bold mt-2"
-                    onChange={(ev) => setPassword(ev.target.value)}
                 />
-                <button
-                    disabled={loading}
-                    className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl mt-5 w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold"
-                >
-                    {loading ? "Загрузка..." : "Зарегистрироваться"}
+                <button className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl mt-5 w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold">
+                    {buttonText}
                 </button>
-                {animate && <SuccesAnimation />}
-                {error && <p>Произошла ошибка</p>}
                 <Link
                     to={"/privacy"}
                     className="mt-4 cursor-pointer font-regular text-center text-xs"
