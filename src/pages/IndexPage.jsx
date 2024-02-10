@@ -35,7 +35,10 @@ function Card() {
                         className="cursor-pointer hover:scale-105 transition-transform duration-100"
                         key={item.id}
                     >
-                        <Link to={`/card/${item.id}`} onClick={window.scrollTo(0, 0)}>
+                        <Link
+                            to={`/card/${item.id}`}
+                            onClick={window.scrollTo(0, 0)}
+                        >
                             <img src={item.image} className="rounded-xl" />
                             <h2 className="mt-2 text-l font-bold">
                                 {item.title}
@@ -70,7 +73,7 @@ export default function IndexPage() {
                     ИП Керимов Эльвир Адилович ИНН: 503817618530
                 </p>
             </div>
-            <div className="p-4 max-w-screen-lg flex justify-center items-center m-auto">
+            <div className="p-2 max-w-screen-lg flex justify-center items-center m-auto">
                 <button
                     data-te-ripple-init
                     className="bg-black text-white rounded-xl fixed p-4 bottom-3 lg:w-[360px] md:w-[360px] sm:w-[360px] w-11/12 max-w-[400px] hover:bg-zinc-800"
