@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-const user = JSON.parse(localStorage.getItem("user")) || null;
 
 export default function RegisterPage() {
     const [buttonText, setButtonText] = useState("Зарегистрироваться");
@@ -23,10 +22,10 @@ export default function RegisterPage() {
                 setButtonText("Загрузка...");
                 setTimeout(() => {
                     setButtonText("Успешно");
-                }, 100);
+                }, 1000);
                 setTimeout(() => {
                     window.location.href = "https://atletikum.ru/login";
-                }, 1000);
+                }, 2000);
             })
             .catch((error) => {
                 console.log(error);
@@ -55,7 +54,7 @@ export default function RegisterPage() {
                     className="p-3 border-2 border-black rounded-xl outline-none w-full lg:max-w-xs md:max-w-xs sm:max-w-xs font-bold mt-2"
                 />
                 <input
-                    type="text"
+                    type="tel"
                     name="phone"
                     required
                     placeholder="Номер телефона"
