@@ -4,6 +4,25 @@ import axios from "axios";
 export default function AccountPage() {
     async function payment(ev) {
         ev.preventDefault();
+        let config = {
+            method: "post",
+            url: "https://test.isroil-holding.uz/api/payment",
+            headers: {
+                Authorization:
+                    "Bearer " + JSON.parse(localStorage.getItem("user")).token,
+            },
+        };
+        axios
+            .request(config)
+            .then((response) => {
+                const data2 = response.data;
+                const confirmation_url = data2.innerData.confirmation_url;
+                console.log(confirmation_url);
+                window.open(confirmation_url, "_self");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
     function logout(ev) {
         ev.preventDefault();
