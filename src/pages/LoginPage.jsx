@@ -45,7 +45,7 @@ export default function LoginPage() {
                 onSubmit={handleLoginSubmit}
             >
                 <input
-                    type="text"
+                    type="tel"
                     required
                     placeholder="Номер телефона"
                     className="p-3 border-2 border-black rounded-xl outline-none w-full lg:max-w-xs md:max-w-xs sm:max-w-xs font-bold"
