@@ -37,7 +37,7 @@ export default function AccountPage() {
                         <div className="flex justify-between items-center">
                             <p>Действителен до:</p>
                             <p className="flex items-center justify-center">
-                                <label className="text-4xl font-bold mr-3 price">
+                                <label className="text-2xl font-bold mr-3 price">
                                     {user.expiration}
                                 </label>
                             </p>
@@ -53,7 +53,7 @@ export default function AccountPage() {
                     </div>
                     <p className="text-center text-xl flex justify-center items-center mt-5 mb-5">
                         Стоимость продления:
-                        <label className="font-bold text-3xl ml-2">
+                        <label className="font-bold text-2xl ml-2">
                             {user.payment_amount + " ₽"}
                         </label>
                     </p>
