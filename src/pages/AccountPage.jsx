@@ -1,7 +1,11 @@
-const user = JSON.parse(localStorage.getItem("user")) || null;
 import axios from "axios";
+import { useState } from "react";
 
 export default function AccountPage() {
+    const user = JSON.parse(localStorage.getItem("user")) || null;
+    const expiration = user.expiration.slice(0, 10);
+    const [buttonText, setButtonText] = useState("Продлить");
+
     async function payment(ev) {
         ev.preventDefault();
         let config = {
@@ -15,10 +19,11 @@ export default function AccountPage() {
         axios
             .request(config)
             .then((response) => {
-                const data2 = response.data;
-                const confirmation_url = data2.innerData.confirmation_url;
-                console.log(confirmation_url);
+                setButtonText("Загрузка...");
+                const confirmation_url =
+                    response.data.innerData.confirmation_url;
                 window.open(confirmation_url, "_self");
+                localStorage.clear();
             })
             .catch((error) => {
                 console.log(error);
@@ -37,8 +42,8 @@ export default function AccountPage() {
                         <div className="flex justify-between items-center">
                             <p>Действителен до:</p>
                             <p className="flex items-center justify-center">
-                                <label className="text-2xl font-bold mr-3 price">
-                                    {user.expiration}
+                                <label className="text-xl font-bold mr-3 price">
+                                    {expiration}
                                 </label>
                             </p>
                         </div>
@@ -48,12 +53,12 @@ export default function AccountPage() {
                             onClick={payment}
                             className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold my-5"
                         >
-                            Продлить
+                            {buttonText}
                         </button>
                     </div>
                     <p className="text-center text-xl flex justify-center items-center mt-5 mb-5">
                         Стоимость продления:
-                        <label className="font-bold text-2xl ml-2">
+                        <label className="font-bold text-xl ml-2">
                             {user.payment_amount + " ₽"}
                         </label>
                     </p>
