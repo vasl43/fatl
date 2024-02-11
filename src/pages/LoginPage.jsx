@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-const user = JSON.parse(localStorage.getItem("user")) || null;
 
 export default function LoginPage() {
     const [buttonText, setButtonText] = useState("Войти");
@@ -19,18 +18,18 @@ export default function LoginPage() {
 
         axios(config)
             .then((response) => {
+                setButtonText("Заргузка...");
+                setTimeout(() => {
+                    setButtonText("Успешно");
+                }, 1000);
                 localStorage.setItem(
                     "user",
                     JSON.stringify(response.data.innerData)
                 );
                 console.log(response);
-                setButtonText("Заргузка...");
-                setTimeout(() => {
-                    setButtonText("Успешно");
-                }, 100);
                 setTimeout(() => {
                     window.location.href = "https://atletikum.ru/account";
-                }, 1000);
+                }, 2000);
             })
             .catch((error) => {
                 console.log(error);
