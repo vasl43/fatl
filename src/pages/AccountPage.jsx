@@ -37,16 +37,16 @@ export default function AccountPage() {
             {!!user && (
                 <div>
                     <div className="m-auto rounded-xl border-solid border-2 p-4 w-full lg:max-w-xs md:max-w-xs sm:max-w-xs">
-                        <div className="flex justify-between items-center">
+                        <div className="flex justify-center items-center">
                             <p className="flex items-center justify-center">
                                 {user.expiration != null && (
-                                    <label className="text-xl font-bold mr-3 price flex">
-                                        <p className="mr-1">Действителен до:</p>
+                                    <label className="text-xl font-regular mr-3 price flex">
+                                        {"Действителен до: "}
                                         {user.expiration.slice(0, 10)}
                                     </label>
                                 )}
                                 {user.expiration == null && (
-                                    <label className="text-xl font-bold mr-3 price text-center">
+                                    <label className="text-xl font-regular mr-3 price text-center">
                                         Нет активного абонемента
                                     </label>
                                 )}
@@ -63,7 +63,7 @@ export default function AccountPage() {
                     </div>
                     <p className="text-center text-xl flex justify-center items-center mt-5 mb-5">
                         Стоимость продления:
-                        <label className="font-bold text-xl ml-2">
+                        <label className="font-regular text-xl ml-2">
                             {user.payment_amount + " ₽"}
                         </label>
                     </p>
