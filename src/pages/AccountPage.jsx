@@ -4,6 +4,11 @@ const user = JSON.parse(localStorage.getItem("user")) || null;
 
 export default function AccountPage() {
     const [buttonText, setButtonText] = useState("Продлить");
+    let today = new Date();
+    let expirationDate = new Date(user.expiration);
+    let userActive = expirationDate > today;
+    console.log(userActive);
+
     async function payment(ev) {
         ev.preventDefault();
         let config = {
@@ -40,7 +45,7 @@ export default function AccountPage() {
                         <div className="flex justify-center items-center">
                             <p className="flex items-center justify-center">
                                 {user.expiration != null && (
-                                    <label className="text-xl font-regular mr-3 price flex">
+                                    <label className="text-lg font-regular mr-3 price flex">
                                         {"Действителен до: "}
                                         {user.expiration.slice(0, 10)}
                                     </label>
@@ -61,7 +66,7 @@ export default function AccountPage() {
                             {buttonText}
                         </button>
                     </div>
-                    <p className="text-center text-xl flex justify-center items-center mt-5 mb-5">
+                    <p className="text-center text-lg flex justify-center items-center mt-5 mb-5">
                         Стоимость продления:
                         <label className="font-regular text-xl ml-2">
                             {user.payment_amount + " ₽"}
