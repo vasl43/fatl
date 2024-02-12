@@ -7,7 +7,6 @@ import axios from "axios";
 import PrivacyPage from "./pages/PrivacyPage";
 import CardPage from "./pages/CardPage";
 import AccountPage from "./pages/AccountPage";
-import AdminPage from "./pages/AdminPage";
 
 axios.defaults.baseURL = "https://test.isroil-holding.uz";
 axios.defaults.withCredentials = true;
@@ -22,7 +21,6 @@ function App() {
                 <Route path="/card/:id" element={<CardPage />} />
                 <Route path="/privacy" element={<PrivacyPage />} />
                 <Route path="/account" element={<AccountPage />} />
-                <Route path="/admin" element={<AdminPage />} />
             </Route>
         </Routes>
     );
