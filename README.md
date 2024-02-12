@@ -6,5 +6,4 @@
 - Node.js
 - Tailwind CSS
 
-Лицензия
 Этот проект лицензирован на условиях MIT License.
