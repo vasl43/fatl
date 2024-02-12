@@ -1,4 +1,4 @@
-export default function Privacy() {
+export default function PrivacyPage() {
     return (
         <div className="p-4 max-w-screen-lg m-auto">
             <p>
