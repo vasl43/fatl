@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export default function LoginPage() {
     const [buttonText, setButtonText] = useState("Войти");
+    const [errorMessage, setErrorMessage] = useState("");
 
     async function handleLoginSubmit(ev) {
         ev.preventDefault();
@@ -32,6 +33,7 @@ export default function LoginPage() {
                 }, 2000);
             })
             .catch((error) => {
+                setErrorMessage(error.response.data.message);
                 console.log(error);
             });
     }
@@ -55,9 +57,12 @@ export default function LoginPage() {
                     type="password"
                     required
                     placeholder="Пароль"
-                    className="p-3 border-2 border-black rounded-xl outline-none w-full lg:max-w-xs md:max-w-xs sm:max-w-xs mt-2 font-bold"
+                    className="p-3 border-2 border-black rounded-xl outline-none w-full lg:max-w-xs md:max-w-xs sm:max-w-xs mt-2 font-bold mb-2"
                     name="password"
                 />
+                <div className="mt-1 flex items-center justify-center text-center">
+                    <p>{errorMessage}</p>
+                </div>
                 <button className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl mt-5 w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold">
                     {buttonText}
                 </button>
