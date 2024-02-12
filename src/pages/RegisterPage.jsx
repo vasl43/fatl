@@ -4,6 +4,18 @@ import { useState } from "react";
 
 export default function RegisterPage() {
     const [buttonText, setButtonText] = useState("Зарегистрироваться");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isFocused, setIsFocused] = useState(false);
+
+    const handleFocus = () => {
+        setIsFocused(true);
+    };
+
+    const handleBlur = () => {
+        setIsFocused(false);
+    };
+
+    const placeholderText = isFocused ? "ГГГГ-ММ-ДД" : "Дата рождения ребенка";
 
     async function registerUser(ev) {
         ev.preventDefault();
@@ -28,6 +40,7 @@ export default function RegisterPage() {
                 }, 2000);
             })
             .catch((error) => {
+                setErrorMessage(error.response.data.message);
                 console.log(error);
             });
     }
@@ -50,8 +63,11 @@ export default function RegisterPage() {
                     type="text"
                     name="brithday"
                     required
-                    placeholder="Дата рождения ребенка"
+                    placeholder={placeholderText}
                     className="p-3 border-2 border-black rounded-xl outline-none w-full lg:max-w-xs md:max-w-xs sm:max-w-xs font-bold mt-2"
+                    maxLength={10}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
                 />
                 <input
                     type="tel"
@@ -66,8 +82,11 @@ export default function RegisterPage() {
                     name="password"
                     required
                     placeholder="Пароль"
-                    className="p-3 border-2 border-black rounded-xl outline-none w-full lg:max-w-xs md:max-w-xs sm:max-w-xs font-bold mt-2"
+                    className="p-3 border-2 border-black rounded-xl outline-none w-full lg:max-w-xs md:max-w-xs sm:max-w-xs font-bold mt-2 mb-2"
                 />
+                <div className="mt-1 flex items-center justify-center text-center">
+                    <p>{errorMessage}</p>
+                </div>
                 <button className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl mt-5 w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold">
                     {buttonText}
                 </button>
