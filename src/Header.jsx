@@ -4,7 +4,7 @@ const user = JSON.parse(localStorage.getItem("user")) || null;
 
 export default function Header() {
     return (
-        <header className="max-w-screen-lg m-auto flex justify-between p-4 pt-8 z-50 bg-white">
+        <header className="max-w-screen-lg m-auto flex justify-between p-4 pt-8 z-50 bg-white sticky">
             <div className="size-8">
                 <Link to={"/"} className="size-8">
                     <img src="/logo.png" alt="Логотип" />
