@@ -1,11 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
+const user = JSON.parse(localStorage.getItem("user")) || null;
 
 export default function AccountPage() {
-    const user = JSON.parse(localStorage.getItem("user")) || null;
-    const expiration = user.expiration.slice(0, 10);
     const [buttonText, setButtonText] = useState("Продлить");
-
     async function payment(ev) {
         ev.preventDefault();
         let config = {
@@ -40,11 +38,18 @@ export default function AccountPage() {
                 <div>
                     <div className="m-auto rounded-xl border-solid border-2 p-4 w-full lg:max-w-xs md:max-w-xs sm:max-w-xs">
                         <div className="flex justify-between items-center">
-                            <p>Действителен до:</p>
                             <p className="flex items-center justify-center">
-                                <label className="text-xl font-bold mr-3 price">
-                                    {expiration}
-                                </label>
+                                {user.expiration != null && (
+                                    <label className="text-xl font-bold mr-3 price flex">
+                                        <p className="mr-1">Действителен до:</p>
+                                        {user.expiration.slice(0, 10)}
+                                    </label>
+                                )}
+                                {user.expiration == null && (
+                                    <label className="text-xl font-bold mr-3 price text-center">
+                                        Нет активного абонемента
+                                    </label>
+                                )}
                             </p>
                         </div>
                     </div>
