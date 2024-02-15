@@ -12,7 +12,7 @@ export default function Header() {
             </div>
 
             <div className="flex gap-2 items-center cursor-pointer">
-                {!!user && (
+                {user && (
                     <Link to={"/account"}>
                         <div className="font-bold text-lg flex items-center">
                             {user.fullname.split(" ")[0]}
