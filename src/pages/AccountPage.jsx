@@ -4,10 +4,6 @@ const user = JSON.parse(localStorage.getItem("user")) || null;
 
 export default function AccountPage() {
     const [buttonText, setButtonText] = useState("Продлить");
-    let today = new Date();
-    let expirationDate = new Date(user.expiration);
-    let userActive = expirationDate > today;
-    console.log(userActive);
 
     async function payment(ev) {
         ev.preventDefault();
@@ -26,7 +22,6 @@ export default function AccountPage() {
                 const confirmation_url =
                     response.data.innerData.confirmation_url;
                 window.open(confirmation_url, "_self");
-                localStorage.clear();
             })
             .catch((error) => {
                 console.log(error);
