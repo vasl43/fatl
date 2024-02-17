@@ -59,6 +59,8 @@ export default function AccountPage() {
                                     <label className="text-lg font-regular mr-3 price flex">
                                         {"Осталось "}
                                         {diffDays}
+                                        {diffDays == 1 && "день"}
+                                        {diffDays <= 4 && "дня"}
                                         {" дней"}
                                     </label>
                                 )}
