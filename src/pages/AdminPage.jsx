@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import moment from "moment";
 
 export default function AdminPage() {
     const [userData, setUserData] = useState([]);
@@ -16,7 +15,6 @@ export default function AdminPage() {
                     "Bearer " + JSON.parse(localStorage.getItem("user")).token,
             },
         };
-
         axios
             .request(config)
             .then((response) => {
@@ -26,11 +24,13 @@ export default function AdminPage() {
                 console.log(error);
             });
     }, []);
+
     function logout(ev) {
         ev.preventDefault();
         localStorage.clear();
         window.open("https://atletikum.ru/", "_self");
     }
+
     function changePrice(user) {
         let data = JSON.stringify({
             payment_amount: Number(newPrice),
@@ -47,7 +47,6 @@ export default function AdminPage() {
             },
             data: data,
         };
-
         axios
             .request(config)
             .then((response) => {
@@ -58,6 +57,7 @@ export default function AdminPage() {
                 console.log(error);
             });
     }
+
     return (
         <div className="p-4 max-w-screen-lg m-auto ">
             <h2 className="text-xl text-center mt-20">Список клиентов</h2>
@@ -95,7 +95,7 @@ export default function AdminPage() {
                             {user.expiration == null ? (
                                 <p>Н/А</p>
                             ) : (
-                                <p>{moment(user.expiration).format("ll")}</p>
+                                <p>{user.expiration.slice(0, 10)}</p>
                             )}
                         </div>
                         <div
