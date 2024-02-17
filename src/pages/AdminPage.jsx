@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import moment from "moment";
 
 export default function AdminPage() {
     const [userData, setUserData] = useState([]);
@@ -32,30 +33,32 @@ export default function AdminPage() {
         window.open("https://atletikum.ru/", "_self");
     }
     function changePrice(user) {
-        setCleintData(user);
-        user.payment_amount = newPrice;
+        let data = JSON.stringify({
+            payment_amount: Number(newPrice),
+        });
+
         let config = {
             method: "patch",
             maxBodyLength: Infinity,
-            url: "https://test.isroil-holding.uz/api/user/" + user.id,
+            url: "https://test.isroil-holding.uz/api/payment/user/" + user.id,
             headers: {
                 "Content-Type": "application/json",
                 Authorization:
                     "Bearer " + JSON.parse(localStorage.getItem("user")).token,
             },
-            payment_amount: newPrice,
+            data: data,
         };
 
         axios
             .request(config)
             .then((response) => {
                 console.log(JSON.stringify(response.data));
+                location.reload();
             })
             .catch((error) => {
                 console.log(error);
             });
     }
-
     return (
         <div className="p-4 max-w-screen-lg m-auto ">
             <h2 className="text-xl text-center mt-20">Список клиентов</h2>
@@ -93,7 +96,7 @@ export default function AdminPage() {
                             {user.expiration == null ? (
                                 <p>Н/А</p>
                             ) : (
-                                <p>{user.expiration.slice(0, 10)}</p>
+                                <p>{moment(user.expiration).format("ll")}</p>
                             )}
                         </div>
                         <div
