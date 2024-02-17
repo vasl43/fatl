@@ -1,10 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
-const user = JSON.parse(localStorage.getItem("user")) || null;
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import moment from "moment";
-import "moment/locale/ru";
-moment.locale("ru");
+const user = JSON.parse(localStorage.getItem("user")) || null;
 
 export default function AccountPage() {
     const [buttonText, setButtonText] = useState("Продлить");
@@ -17,7 +14,7 @@ export default function AccountPage() {
         ev.preventDefault();
         setButtonText(
             <div className="flex justify-center items-center text-center">
-                <p className="animate-spin text-lg p-1">
+                <p className="animate-spin text-2xl ">
                     <AiOutlineLoading3Quarters />
                 </p>
             </div>
@@ -33,6 +30,7 @@ export default function AccountPage() {
         axios
             .request(config)
             .then((response) => {
+                localStorage.clear();
                 const confirmation_url =
                     response.data.innerData.confirmation_url;
                 window.open(confirmation_url, "_self");
@@ -42,12 +40,13 @@ export default function AccountPage() {
                 console.log(error);
             });
     }
+
     function logout(ev) {
         ev.preventDefault();
         localStorage.clear();
         window.open("https://atletikum.ru/", "_self");
     }
-    const date = moment(user.expiration).format("ll");
+
     return (
         <div className="p-4 max-w-screen-lg m-auto mt-2 lg:mt-10 md:mt-10 sm:mt-10 pt-20">
             {!!user && (
@@ -75,7 +74,7 @@ export default function AccountPage() {
                     <div className="m-auto text-center">
                         <button
                             onClick={payment}
-                            className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold my-5 text-base"
+                            className="border-none outline-none shadow-none text-white bg-black h-14 rounded-xl w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold my-5 text-base"
                         >
                             {buttonText}
                         </button>
