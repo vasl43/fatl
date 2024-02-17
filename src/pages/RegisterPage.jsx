@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function RegisterPage() {
     const [buttonText, setButtonText] = useState("Зарегистрироваться");
@@ -19,6 +20,13 @@ export default function RegisterPage() {
 
     async function registerUser(ev) {
         ev.preventDefault();
+        setButtonText(
+            <div className="flex justify-center items-center text-center">
+                <p className="animate-spin text-lg p-1">
+                    <AiOutlineLoading3Quarters />
+                </p>
+            </div>
+        );
 
         let config = {
             method: "post",
@@ -31,17 +39,14 @@ export default function RegisterPage() {
 
         axios(config)
             .then((response) => {
-                setButtonText("Загрузка...");
-                setTimeout(() => {
-                    setButtonText("Успешно");
-                }, 1000);
                 setTimeout(() => {
                     window.location.href = "https://atletikum.ru/login";
-                }, 2000);
+                }, 1000);
             })
             .catch((error) => {
                 setErrorMessage(error.response.data.message);
                 console.log(error);
+                setButtonText("Зарегистрироваться");
             });
     }
 
@@ -87,7 +92,7 @@ export default function RegisterPage() {
                 <div className="mt-1 flex items-center justify-center text-center">
                     <p>{errorMessage}</p>
                 </div>
-                <button className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl mt-5 w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold">
+                <button className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl mt-5 w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold text-base">
                     {buttonText}
                 </button>
                 <Link
