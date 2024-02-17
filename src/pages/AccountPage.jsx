@@ -7,8 +7,11 @@ import "moment/locale/ru";
 moment.locale("ru");
 
 export default function AccountPage() {
-    moment.locale("ru");
     const [buttonText, setButtonText] = useState("Продлить");
+    const oneDay = 24 * 60 * 60 * 1000;
+    const firstDate = new Date();
+    const secondDate = new Date(user.expiration);
+    const diffDays = Math.round(Math.abs((firstDate - secondDate) / oneDay));
 
     async function payment(ev) {
         ev.preventDefault();
@@ -44,7 +47,6 @@ export default function AccountPage() {
         localStorage.clear();
         window.open("https://atletikum.ru/", "_self");
     }
-    moment.locale("ru");
     const date = moment(user.expiration).format("ll");
     return (
         <div className="p-4 max-w-screen-lg m-auto mt-2 lg:mt-10 md:mt-10 sm:mt-10 pt-20">
@@ -55,8 +57,9 @@ export default function AccountPage() {
                             <p className="flex items-center justify-center">
                                 {user.expiration != null && (
                                     <label className="text-lg font-regular mr-3 price flex">
-                                        {"Действителен до: "}
-                                        {date}
+                                        {"Осталось "}
+                                        {diffDays}
+                                        {" дней"}
                                     </label>
                                 )}
                                 {user.expiration == null && (
