@@ -22,7 +22,7 @@ export default function RegisterPage() {
         ev.preventDefault();
         setButtonText(
             <div className="flex justify-center items-center text-center">
-                <p className="animate-spin text-lg p-1">
+                <p className="animate-spin text-2xl">
                     <AiOutlineLoading3Quarters />
                 </p>
             </div>
@@ -92,7 +92,7 @@ export default function RegisterPage() {
                 <div className="mt-1 flex items-center justify-center text-center">
                     <p>{errorMessage}</p>
                 </div>
-                <button className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl mt-5 w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold text-base">
+                <button className="border-none outline-none shadow-none text-white bg-black h-14 rounded-xl mt-5 w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold text-base">
                     {buttonText}
                 </button>
                 <Link
