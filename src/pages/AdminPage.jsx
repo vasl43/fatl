@@ -4,7 +4,6 @@ import moment from "moment";
 
 export default function AdminPage() {
     const [userData, setUserData] = useState([]);
-    const [clientData, setCleintData] = useState();
     const [newPrice, setNewPrice] = useState(3500);
 
     useEffect(() => {
