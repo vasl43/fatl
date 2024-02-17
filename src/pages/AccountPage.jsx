@@ -1,12 +1,24 @@
 import axios from "axios";
 import { useState } from "react";
 const user = JSON.parse(localStorage.getItem("user")) || null;
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import moment from "moment";
+import "moment/locale/ru";
+moment.locale("ru");
 
 export default function AccountPage() {
+    moment.locale("ru");
     const [buttonText, setButtonText] = useState("Продлить");
 
     async function payment(ev) {
         ev.preventDefault();
+        setButtonText(
+            <div className="flex justify-center items-center text-center">
+                <p className="animate-spin text-lg p-1">
+                    <AiOutlineLoading3Quarters />
+                </p>
+            </div>
+        );
         let config = {
             method: "post",
             url: "https://test.isroil-holding.uz/api/payment",
@@ -18,12 +30,12 @@ export default function AccountPage() {
         axios
             .request(config)
             .then((response) => {
-                setButtonText("Загрузка...");
                 const confirmation_url =
                     response.data.innerData.confirmation_url;
                 window.open(confirmation_url, "_self");
             })
             .catch((error) => {
+                setButtonText("Продлить");
                 console.log(error);
             });
     }
@@ -32,6 +44,8 @@ export default function AccountPage() {
         localStorage.clear();
         window.open("https://atletikum.ru/", "_self");
     }
+    moment.locale("ru");
+    const date = moment(user.expiration).format("ll");
     return (
         <div className="p-4 max-w-screen-lg m-auto mt-2 lg:mt-10 md:mt-10 sm:mt-10 pt-20">
             {!!user && (
@@ -42,7 +56,7 @@ export default function AccountPage() {
                                 {user.expiration != null && (
                                     <label className="text-lg font-regular mr-3 price flex">
                                         {"Действителен до: "}
-                                        {user.expiration.slice(0, 10)}
+                                        {date}
                                     </label>
                                 )}
                                 {user.expiration == null && (
@@ -56,7 +70,7 @@ export default function AccountPage() {
                     <div className="m-auto text-center">
                         <button
                             onClick={payment}
-                            className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold my-5"
+                            className="hover:bg-zinc-800 border-none outline-none shadow-none text-white bg-black p-4 rounded-xl w-full lg:max-w-xs md:max-w-xs sm:max-w-xs transition duration-200 font-bold my-5 text-base"
                         >
                             {buttonText}
                         </button>
