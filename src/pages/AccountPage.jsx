@@ -81,11 +81,8 @@ export default function AccountPage() {
                             <p className="flex items-center justify-center">
                                 {userData.expiration != null && (
                                     <label className="text-lg font-regular mr-3 price flex">
-                                        {"Осталось "}
+                                        {"Осталось дней: "}
                                         {diffDays}
-                                        {diffDays == 1 && "день"}
-                                        {diffDays <= 4 && "дня"}
-                                        {" дней"}
                                     </label>
                                 )}
                                 {userData.expiration == null && (
