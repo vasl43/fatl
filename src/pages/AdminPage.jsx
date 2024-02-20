@@ -144,22 +144,7 @@ export default function AdminPage() {
                                         (new Date(user.expiration).getTime() -
                                             new Date().getTime()) /
                                             (1000 * 60 * 60 * 24)
-                                    ) <= 7 && (
-                                        <p className="bg-red-500 rounded-xl">
-                                            {Math.ceil(
-                                                (new Date(
-                                                    user.expiration
-                                                ).getTime() -
-                                                    new Date().getTime()) /
-                                                    (1000 * 60 * 60 * 24)
-                                            )}
-                                        </p>
-                                    )}
-                                    {Math.ceil(
-                                        (new Date(user.expiration).getTime() -
-                                            new Date().getTime()) /
-                                            (1000 * 60 * 60 * 24)
-                                    ) <= 15 && (
+                                    ) < 15 && (
                                         <p className="bg-yellow-500 rounded-xl">
                                             {Math.ceil(
                                                 (new Date(
