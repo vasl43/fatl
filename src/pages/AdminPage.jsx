@@ -5,7 +5,6 @@ export default function AdminPage() {
     const [userData, setUserData] = useState([]);
     const [newPrice, setNewPrice] = useState(3500);
     const [newDate, setNewDate] = useState(0);
-
     useEffect(() => {
         const config = {
             method: "get",
@@ -88,7 +87,6 @@ export default function AdminPage() {
                 console.log(error);
             });
     }
-
     return (
         <div className="p-4 max-w-screen-lg m-auto ">
             <h2 className="text-xl text-center mt-20">Список клиентов</h2>
@@ -117,7 +115,7 @@ export default function AdminPage() {
             <div className="grid grid-cols-4 gap-4 items-center justify-center m-auto text-center mt-10 font-bold mb-5">
                 <p>Ф.И.О</p>
                 <p>Телефон</p>
-                <p>Абонемент</p>
+                <p className="cursor-pointer">Абонемент</p>
                 <p>Цена</p>
             </div>
             <div>
@@ -132,16 +130,62 @@ export default function AdminPage() {
                         <div>
                             <p>{user.phone}</p>
                         </div>
-                        <div>
+                        <div className="">
                             {user.expiration == null ? (
-                                <p>Н/А</p>
+                                <p className="bg-zinc-500 rounded-xl cursor-not-allowed">
+                                    Н/А
+                                </p>
                             ) : (
-                                <p
+                                <div
                                     className="cursor-pointer"
                                     onClick={() => changeExpiration(user)}
                                 >
-                                    {user.expiration.slice(0, 10)}
-                                </p>
+                                    {Math.ceil(
+                                        (new Date(user.expiration).getTime() -
+                                            new Date().getTime()) /
+                                            (1000 * 60 * 60 * 24)
+                                    ) <= 7 && (
+                                        <p className="bg-red-500 rounded-xl">
+                                            {Math.ceil(
+                                                (new Date(
+                                                    user.expiration
+                                                ).getTime() -
+                                                    new Date().getTime()) /
+                                                    (1000 * 60 * 60 * 24)
+                                            )}
+                                        </p>
+                                    )}
+                                    {Math.ceil(
+                                        (new Date(user.expiration).getTime() -
+                                            new Date().getTime()) /
+                                            (1000 * 60 * 60 * 24)
+                                    ) <= 15 && (
+                                        <p className="bg-yellow-500 rounded-xl">
+                                            {Math.ceil(
+                                                (new Date(
+                                                    user.expiration
+                                                ).getTime() -
+                                                    new Date().getTime()) /
+                                                    (1000 * 60 * 60 * 24)
+                                            )}
+                                        </p>
+                                    )}
+                                    {Math.ceil(
+                                        (new Date(user.expiration).getTime() -
+                                            new Date().getTime()) /
+                                            (1000 * 60 * 60 * 24)
+                                    ) > 15 && (
+                                        <p className="bg-green-500 rounded-xl">
+                                            {Math.ceil(
+                                                (new Date(
+                                                    user.expiration
+                                                ).getTime() -
+                                                    new Date().getTime()) /
+                                                    (1000 * 60 * 60 * 24)
+                                            )}
+                                        </p>
+                                    )}
+                                </div>
                             )}
                         </div>
                         <div
