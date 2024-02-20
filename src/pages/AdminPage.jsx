@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 export default function AdminPage() {
     const [userData, setUserData] = useState([]);
     const [newPrice, setNewPrice] = useState(3500);
+    const [newDate, setNewDate] = useState(0);
 
     useEffect(() => {
         const config = {
@@ -12,7 +13,7 @@ export default function AdminPage() {
             url: "https://test.isroil-holding.uz/api/user",
             headers: {
                 Authorization:
-                    "Bearer " + JSON.parse(localStorage.getItem("user")).token,
+                    "Bearer " + JSON.parse(localStorage.getItem("user"))?.token,
             },
         };
         axios
@@ -57,6 +58,36 @@ export default function AdminPage() {
                 console.log(error);
             });
     }
+    function changeExpiration(user) {
+        let data = JSON.stringify({
+            type: "add",
+            day: Number(newDate),
+        });
+
+        let config = {
+            method: "patch",
+            maxBodyLength: Infinity,
+            url:
+                "https://test.isroil-holding.uz/api/user/change/expiration/" +
+                user.id,
+            headers: {
+                "Content-Type": "application/json",
+                Authorization:
+                    "Bearer " + JSON.parse(localStorage.getItem("user")).token,
+            },
+            data: data,
+        };
+
+        axios
+            .request(config)
+            .then((response) => {
+                console.log(JSON.stringify(response.data));
+                location.reload();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
 
     return (
         <div className="p-4 max-w-screen-lg m-auto ">
@@ -67,10 +98,20 @@ export default function AdminPage() {
                 </label>
                 <input
                     type="num"
-                    className="bg-zinc-200 p-4 outline-none rounded-r-xl pl-0 w-[60px]"
+                    className="bg-zinc-200 p-4 outline-none rounded-r-xl pl-0 w-[60px] mr-5"
                     placeholder="3500"
                     maxLength={4}
                     onChange={(ev) => setNewPrice(ev.target.value)}
+                />
+                <label className=" bg-zinc-200 p-4 rounded-xl rounded-r-none">
+                    Добавить абонемент:
+                </label>
+                <input
+                    type="num"
+                    className="bg-zinc-200 p-4 outline-none rounded-r-xl pl-0 w-[60px]"
+                    placeholder="0"
+                    maxLength={4}
+                    onChange={(ev) => setNewDate(ev.target.value)}
                 />
             </div>
             <div className="grid grid-cols-4 gap-4 items-center justify-center m-auto text-center mt-10 font-bold mb-5">
@@ -95,7 +136,12 @@ export default function AdminPage() {
                             {user.expiration == null ? (
                                 <p>Н/А</p>
                             ) : (
-                                <p>{user.expiration.slice(0, 10)}</p>
+                                <p
+                                    className="cursor-pointer"
+                                    onClick={() => changeExpiration(user)}
+                                >
+                                    {user.expiration.slice(0, 10)}
+                                </p>
                             )}
                         </div>
                         <div
