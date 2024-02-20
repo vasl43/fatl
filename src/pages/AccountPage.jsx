@@ -6,6 +6,7 @@ const user = JSON.parse(localStorage.getItem("user")) || null;
 export default function AccountPage() {
     const [userData, setUserData] = useState([]);
     const [buttonText, setButtonText] = useState("Продлить");
+    const [loading, setLoading] = useState(true);
     const oneDay = 24 * 60 * 60 * 1000;
     const firstDate = new Date();
     const secondDate = new Date(userData.expiration);
@@ -27,7 +28,9 @@ export default function AccountPage() {
         axios
             .request(config)
             .then((response) => {
+                setLoading(true);
                 setUserData(response.data.innerData);
+                setLoading(false);
             })
             .catch((error) => {
                 console.log(error);
@@ -87,7 +90,11 @@ export default function AccountPage() {
                                 )}
                                 {userData.expiration == null && (
                                     <label className="text-xl font-regular mr-3 price text-center">
-                                        Нет активного абонемента
+                                        {loading ? (
+                                            <>Загрузка...</>
+                                        ) : (
+                                            <>Нет активного абонемента</>
+                                        )}
                                     </label>
                                 )}
                             </p>
@@ -104,7 +111,11 @@ export default function AccountPage() {
                     <p className="text-center text-lg flex justify-center items-center mt-5 mb-5">
                         Стоимость продления:
                         <label className="font-regular text-xl ml-2">
-                            {userData.payment_amount + " ₽"}
+                            {loading ? (
+                                <>Загрузка...</>
+                            ) : (
+                                <>{userData.payment_amount + " ₽"}</>
+                            )}
                         </label>
                     </p>
                     <div className="flex justify-center items-center text-center m-auto py-10">
