@@ -105,15 +105,37 @@ export default function AccountPage() {
                             {buttonText}
                         </button>
                     </div>
-                    <p className="text-center text-lg flex justify-center items-center mt-5 mb-5">
+                    <p className="text-center text-lg flex justify-center items-center mt-2 mb-5">
                         Стоимость продления:
                         <label className="font-regular text-xl ml-2">
                             {loading ? (
                                 <>Загрузка...</>
                             ) : (
-                                <>{userData.payment_amount + " ₽"}</>
+                                <p>
+                                    <p className="line-through text-xs">
+                                        {" "}
+                                        {userData.expiration != null &&
+                                            userData.payment_amount + "₽"}
+                                    </p>
+                                    {userData.expiration != null &&
+                                        userData.payment_amount < 4500 &&
+                                        userData.payment_amount - 500 + "₽"}
+                                    {userData.expiration != null &&
+                                        userData.payment_amount > 4500 &&
+                                        userData.payment_amount - 1000 + "₽"}
+                                    {userData.expiration == null &&
+                                        userData.payment_amount + "₽"}
+                                </p>
                             )}
                         </label>
+                    </p>
+                    <p className="text-center">
+                        {userData.expiration != null &&
+                            userData.payment_amount < 4500 &&
+                            "Скидка 500 рублей за своевременную оплату"}
+                        {userData.expiration != null &&
+                            userData.payment_amount > 4500 &&
+                            "Скидка 1000 рублей за своевременную оплату"}
                     </p>
                     <div className="flex justify-center items-center text-center m-auto py-10">
                         <button onClick={logout}>Выйти</button>
