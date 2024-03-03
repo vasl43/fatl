@@ -87,6 +87,36 @@ export default function AdminPage() {
                 console.log(error);
             });
     }
+    function changeExpiration2(user) {
+        let data = JSON.stringify({
+            type: "subtract",
+            day: Number(newDate),
+        });
+
+        let config = {
+            method: "patch",
+            maxBodyLength: Infinity,
+            url:
+                "https://test.isroil-holding.uz/api/user/change/expiration/" +
+                user.id,
+            headers: {
+                "Content-Type": "application/json",
+                Authorization:
+                    "Bearer " + JSON.parse(localStorage.getItem("user")).token,
+            },
+            data: data,
+        };
+
+        axios
+            .request(config)
+            .then((response) => {
+                console.log(JSON.stringify(response.data));
+                location.reload();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
     return (
         <div className="p-4 max-w-screen-lg m-auto ">
             <h2 className="text-xl text-center mt-20">Список клиентов</h2>
@@ -102,7 +132,7 @@ export default function AdminPage() {
                     onChange={(ev) => setNewPrice(ev.target.value)}
                 />
                 <label className=" bg-zinc-200 p-4 rounded-xl rounded-r-none">
-                    Добавить абонемент:
+                    Добавить / уменишить абонемент:
                 </label>
                 <input
                     type="num"
@@ -136,16 +166,19 @@ export default function AdminPage() {
                                     Н/А
                                 </p>
                             ) : (
-                                <div
-                                    className="cursor-pointer"
-                                    onClick={() => changeExpiration(user)}
-                                >
+                                <div className="flex w-full justify-between items-center">
+                                    <div
+                                        onClick={() => changeExpiration(user)}
+                                        className="cursor-pointer"
+                                    >
+                                        <p>+</p>
+                                    </div>
                                     {Math.ceil(
                                         (new Date(user.expiration).getTime() -
                                             new Date().getTime()) /
                                             (1000 * 60 * 60 * 24)
                                     ) < 15 && (
-                                        <p className="bg-yellow-500 rounded-xl">
+                                        <p className="bg-yellow-500 rounded-xl w-1/2">
                                             {Math.ceil(
                                                 (new Date(
                                                     user.expiration
@@ -160,7 +193,7 @@ export default function AdminPage() {
                                             new Date().getTime()) /
                                             (1000 * 60 * 60 * 24)
                                     ) > 15 && (
-                                        <p className="bg-green-500 rounded-xl">
+                                        <p className="bg-green-500 rounded-xl w-1/2">
                                             {Math.ceil(
                                                 (new Date(
                                                     user.expiration
@@ -170,6 +203,12 @@ export default function AdminPage() {
                                             )}
                                         </p>
                                     )}
+                                    <div
+                                        className="cursor-pointer"
+                                        onClick={() => changeExpiration2(user)}
+                                    >
+                                        <p>-</p>
+                                    </div>
                                 </div>
                             )}
                         </div>
