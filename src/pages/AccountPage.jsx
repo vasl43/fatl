@@ -5,7 +5,7 @@ const user = JSON.parse(localStorage.getItem("user")) || null;
 
 export default function AccountPage() {
     const [userData, setUserData] = useState([]);
-    const [buttonText, setButtonText] = useState("Продлить");
+    const [buttonText, setButtonText] = useState("Оплатить");
     const [loading, setLoading] = useState(true);
     const oneDay = 24 * 60 * 60 * 1000;
     const firstDate = new Date();
